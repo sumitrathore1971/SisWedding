@@ -1,31 +1,55 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion } from "motion/react";
+import { Volume2 } from "lucide-react";
 
 export const SplashScreen: React.FC = () => {
   const [isSplitting, setIsSplitting] = useState(false);
   const [isExited, setIsExited] = useState(false);
+  const splitTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const exitTimerRef = useRef<NodeJS.Timeout | null>(null);
+
+  const startSplit = () => {
+    if (isSplitting || isExited) return;
+    setIsSplitting(true);
+
+    // Dispatch event to unlock & start music
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(new CustomEvent("start-wedding-music"));
+    }
+
+    if (splitTimerRef.current) clearTimeout(splitTimerRef.current);
+    if (exitTimerRef.current) clearTimeout(exitTimerRef.current);
+
+    exitTimerRef.current = setTimeout(() => {
+      setIsExited(true);
+      document.body.style.overflow = "";
+    }, 950);
+  };
 
   useEffect(() => {
     // Lock scroll during splash screen
     const originalOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
 
-    // Show splash for 1.6s, then start center split
-    const splitTimer = setTimeout(() => {
+    // Show splash for 1.8s, then start center split automatically
+    splitTimerRef.current = setTimeout(() => {
       setIsSplitting(true);
-    }, 1600);
+      if (typeof window !== "undefined") {
+        window.dispatchEvent(new CustomEvent("start-wedding-music"));
+      }
+    }, 1800);
 
-    // After split completes (~900ms), unmount splash and restore scroll
-    const exitTimer = setTimeout(() => {
+    // After split completes (~950ms), unmount splash and restore scroll
+    exitTimerRef.current = setTimeout(() => {
       setIsExited(true);
       document.body.style.overflow = originalOverflow || "";
-    }, 2550);
+    }, 2800);
 
     return () => {
-      clearTimeout(splitTimer);
-      clearTimeout(exitTimer);
+      if (splitTimerRef.current) clearTimeout(splitTimerRef.current);
+      if (exitTimerRef.current) clearTimeout(exitTimerRef.current);
       document.body.style.overflow = originalOverflow || "";
     };
   }, []);
@@ -118,4 +142,3 @@ export const SplashScreen: React.FC = () => {
     </div>
   );
 };
-

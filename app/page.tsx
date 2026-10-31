@@ -36,7 +36,7 @@ export default function WeddingInvitationPage() {
       </div>
 
       {/* Floating Music Toggle Button in bottom-right corner of mobile view */}
-      <div className="fixed bottom-5 right-5 sm:right-auto sm:left-1/2 sm:-translate-x-1/2 sm:w-[480px] z-50 pointer-events-none flex justify-end sm:px-5">
+      <div className="fixed bottom-6 right-6 sm:right-auto sm:left-1/2 sm:-translate-x-1/2 sm:w-[480px] z-[60] pointer-events-none flex justify-end sm:px-6">
         <MusicToggleButton src="/music/invitationsong.mp3" />
       </div>
 
