@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { motion } from "motion/react";
-import { Volume2 } from "lucide-react";
 
 export const SplashScreen: React.FC = () => {
   const [isSplitting, setIsSplitting] = useState(false);
@@ -14,7 +13,6 @@ export const SplashScreen: React.FC = () => {
     if (isSplitting || isExited) return;
     setIsSplitting(true);
 
-    // Dispatch event to unlock & start music
     if (typeof window !== "undefined") {
       window.dispatchEvent(new CustomEvent("start-wedding-music"));
     }
@@ -90,7 +88,8 @@ export const SplashScreen: React.FC = () => {
 
   return (
     <div
-      className={`fixed inset-0 sm:left-1/2 sm:-translate-x-1/2 sm:w-[480px] sm:max-w-[480px] z-[999999] select-none overflow-hidden ${
+      onClick={startSplit}
+      className={`fixed inset-0 sm:left-1/2 sm:-translate-x-1/2 sm:w-[480px] sm:max-w-[480px] z-[999999] select-none overflow-hidden cursor-pointer ${
         isSplitting ? "bg-transparent pointer-events-none" : "bg-[#2b060d] pointer-events-auto"
       }`}
       role="banner"
@@ -114,7 +113,7 @@ export const SplashScreen: React.FC = () => {
             animate={{ x: "-100%" }}
             transition={{
               duration: 0.9,
-              ease: [0.76, 0, 0.24, 1], // Cinematic smooth ease
+              ease: [0.76, 0, 0.24, 1],
             }}
             className="absolute top-0 left-0 w-1/2 h-full overflow-hidden bg-[#2b060d] will-change-transform"
           >
@@ -129,7 +128,7 @@ export const SplashScreen: React.FC = () => {
             animate={{ x: "100%" }}
             transition={{
               duration: 0.9,
-              ease: [0.76, 0, 0.24, 1], // Cinematic smooth ease
+              ease: [0.76, 0, 0.24, 1],
             }}
             className="absolute top-0 right-0 w-1/2 h-full overflow-hidden bg-[#2b060d] will-change-transform"
           >
