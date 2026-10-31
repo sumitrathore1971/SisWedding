@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useEffect, useRef, useState, type RefObject } from "react";
+import React, { useRef, useState } from "react";
 import {
   cubicBezier,
   motion,
-  useMotionValue,
+  useScroll,
   useMotionValueEvent,
   useReducedMotion,
   useTransform,
@@ -17,7 +17,8 @@ import { MehendiSection } from "./MehendiSection";
 import { SangeetSection } from "./SangeetSection";
 import { WeddingSection } from "./WeddingSection";
 
-const SECTION_HEIGHT = "1100vh";
+// Balanced mobile scroll runway: gives each ceremony ~110vh of smooth scroll runway
+const SECTION_HEIGHT = "550vh";
 
 // Keep % on every value: mixing 0 with 0% breaks the tween and the clip silently drops.
 const HIDDEN_CLIP = {
@@ -44,8 +45,9 @@ const CEREMONIES = [
 const TOTAL_CEREMONIES = CEREMONIES.length; // 5 ceremonies total
 const TOTAL_LABEL = String(TOTAL_CEREMONIES).padStart(2, "0");
 
+// Evenly paced mobile wipe sequence with reading pause
 const WIPE_SEQUENCE = CEREMONIES.slice(1).map((ceremony, index) => {
-  const segment = 1 / (TOTAL_CEREMONIES - 1);
+  const segment = 1 / (TOTAL_CEREMONIES - 1); // 0.25
   const segmentStart = index * segment;
   const from = segmentStart + segment * 0.18;
   const to = segmentStart + segment * 0.72;
@@ -58,104 +60,6 @@ const WIPE_SEQUENCE = CEREMONIES.slice(1).map((ceremony, index) => {
     settled: to + (to - from) * 0.45,
   };
 });
-
-function findScrollContext(element: HTMLElement): {
-  scroller: HTMLElement | null;
-  clipper: HTMLElement | null;
-} {
-  let ancestor = element.parentElement;
-  let clipper: HTMLElement | null = null;
-
-  while (ancestor) {
-    const { overflowY } = window.getComputedStyle(ancestor);
-
-    if (overflowY !== "visible") {
-      if (!clipper) clipper = ancestor;
-
-      if (
-        (overflowY === "auto" || overflowY === "scroll") &&
-        ancestor.scrollHeight > ancestor.clientHeight
-      ) {
-        return { scroller: ancestor, clipper: clipper ?? ancestor };
-      }
-    }
-
-    ancestor = ancestor.parentElement;
-  }
-
-  return { scroller: null, clipper };
-}
-
-function useElementScrollProgress(targetRef: RefObject<HTMLElement | null>): {
-  progress: MotionValue<number>;
-  viewportHeight: number | null;
-} {
-  const progress = useMotionValue(0);
-  const [viewportHeight, setViewportHeight] = useState<number | null>(null);
-
-  useEffect(() => {
-    const target = targetRef.current;
-    if (!target) return;
-
-    const { scroller: scrollContainer, clipper } = findScrollContext(target);
-    let animationFrame: number | null = null;
-
-    const updateProgress = () => {
-      animationFrame = null;
-
-      const rect = target.getBoundingClientRect();
-      const containerTop = scrollContainer
-        ? scrollContainer.getBoundingClientRect().top
-        : 0;
-      const availableHeight = scrollContainer
-        ? scrollContainer.clientHeight
-        : window.innerHeight;
-      const nextViewportHeight =
-        clipper && clipper !== scrollContainer
-          ? Math.min(availableHeight, clipper.clientHeight)
-          : availableHeight;
-      const cropped =
-        !!clipper &&
-        clipper !== scrollContainer &&
-        clipper.clientHeight < rect.height;
-      const scrollDistance = Math.max(rect.height - nextViewportHeight, 1);
-      const nextProgress = cropped
-        ? 0
-        : Math.min(Math.max((containerTop - rect.top) / scrollDistance, 0), 1);
-
-      setViewportHeight(nextViewportHeight);
-      progress.set(nextProgress);
-    };
-
-    const requestUpdate = () => {
-      if (animationFrame === null) {
-        animationFrame = window.requestAnimationFrame(updateProgress);
-      }
-    };
-
-    updateProgress();
-    scrollContainer?.addEventListener("scroll", requestUpdate, { passive: true });
-    window.addEventListener("scroll", requestUpdate, { passive: true });
-    window.addEventListener("resize", requestUpdate);
-
-    const observer = new ResizeObserver(requestUpdate);
-    observer.observe(scrollContainer ?? clipper ?? document.documentElement);
-    if (clipper && clipper !== scrollContainer) observer.observe(clipper);
-
-    return () => {
-      scrollContainer?.removeEventListener("scroll", requestUpdate);
-      window.removeEventListener("scroll", requestUpdate);
-      window.removeEventListener("resize", requestUpdate);
-      observer.disconnect();
-
-      if (animationFrame !== null) {
-        window.cancelAnimationFrame(animationFrame);
-      }
-    };
-  }, [progress, targetRef]);
-
-  return { progress, viewportHeight };
-}
 
 function useWipeClip(
   progress: MotionValue<number>,
@@ -198,7 +102,7 @@ function WipeLayer({
   return (
     <motion.div
       data-layer={step.id}
-      className="absolute inset-0 w-full h-full overflow-hidden isolate"
+      className="absolute inset-0 w-full h-full overflow-hidden isolate max-w-[480px] mx-auto"
       style={{ clipPath, willChange: "clip-path", zIndex }}
     >
       <Component />
@@ -208,8 +112,7 @@ function WipeLayer({
 
 /**
  * Top-Centered Ceremony Tracker Badge
- * Centered horizontally so it never collides with the corner decorative wedges.
- * Uses exact midpoint threshold mapping ((from + to) / 2) from reference snippet.
+ * Uses the exact midpoint threshold mapping ((from + to) / 2) to update seamlessly at 50% transition.
  */
 function CeremonyTracker({ progress }: { progress: MotionValue<number> }) {
   const [passedIndex, setPassedIndex] = useState(0);
@@ -242,11 +145,12 @@ function CeremonyTracker({ progress }: { progress: MotionValue<number> }) {
 export function CeremoniesWipeGallery() {
   const wrapperRef = useRef<HTMLElement>(null);
   const shouldReduceMotion = useReducedMotion() ?? false;
-  const { progress: scrollYProgress, viewportHeight } =
-    useElementScrollProgress(wrapperRef);
 
-  // 100vh until measured, so the server and first client render match.
-  const panelHeight = viewportHeight ? `${viewportHeight}px` : "100vh";
+  // Native hardware-accelerated scroll tracking for mobile touch & window scroll
+  const { scrollYProgress } = useScroll({
+    target: wrapperRef,
+    offset: ["start start", "end end"],
+  });
 
   const cueOpacity = useTransform(scrollYProgress, [0, 0.03], [1, 0]);
 
@@ -255,15 +159,13 @@ export function CeremoniesWipeGallery() {
       ref={wrapperRef}
       id="ceremonies-gallery"
       aria-label="Wedding Ceremonies Wipe Flow"
-      className="relative w-full"
+      className="relative w-full max-w-[480px] mx-auto"
       style={{ height: SECTION_HEIGHT }}
     >
-      <div
-        className="sticky top-0 w-full overflow-hidden"
-        style={{ height: panelHeight }}
-      >
+      {/* Mobile-sized sticky viewport container */}
+      <div className="sticky top-0 w-full max-w-[480px] mx-auto h-[100svh] overflow-hidden">
         {/* Base Layer: Invitation Section (Index 0) */}
-        <div className="absolute inset-0 w-full h-full overflow-hidden z-0 isolate">
+        <div className="absolute inset-0 w-full h-full overflow-hidden z-0 isolate max-w-[480px] mx-auto">
           <InvitationSection />
         </div>
 
