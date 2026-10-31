@@ -69,7 +69,7 @@ export function MehendiSection() {
 
         {/* Venue */}
         <p className="font-serif text-xs sm:text-[13px] text-[#831843] font-semibold">
-          {weddingData.venue.venueName}, {weddingData.venue.address}
+          {weddingData.events.mehendi.venueHindi}
         </p>
       </div>
     </section>

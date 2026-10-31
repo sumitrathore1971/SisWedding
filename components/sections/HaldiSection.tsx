@@ -69,7 +69,7 @@ export function HaldiSection() {
 
         {/* Venue */}
         <p className="font-serif text-xs sm:text-[13px] text-[#571c0c] font-semibold">
-          {weddingData.venue.venueName}, {weddingData.venue.address}
+          {weddingData.events.haldi.venueHindi}
         </p>
       </div>
 

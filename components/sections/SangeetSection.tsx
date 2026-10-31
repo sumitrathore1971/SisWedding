@@ -69,7 +69,7 @@ export function SangeetSection() {
 
         {/* Venue */}
         <p className="font-serif text-[11px] sm:text-xs text-[#581c87] font-semibold">
-          {weddingData.venue.venueName}, {weddingData.venue.address}
+          {weddingData.events.sangeet.venueHindi}
         </p>
       </div>
     </section>
