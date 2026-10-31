@@ -1,6 +1,5 @@
 import { OpeningSection } from "@/components/sections/OpeningSection";
 import { CeremonyWipeGallery } from "@/components/sections/CeremoniesWipeGallery";
-import { ClosingSection } from "@/components/sections/ClosingSection";
 import { Decoration } from "@/components/ui/Decoration";
 import { MusicToggleButton } from "@/components/ui/MusicToggleButton";
 import { SplashScreen } from "@/components/ui/SplashScreen";
@@ -28,11 +27,8 @@ export default function WeddingInvitationPage() {
         <Decoration />
         <OpeningSection />
 
-        {/* Sections 2-6: Sticky Wipe Gallery (Invitation -> Haldi -> Mehendi -> Sangeet -> Wedding) */}
+        {/* Sections 2-7: Sticky Wipe Gallery (Invitation -> Haldi -> Mehendi -> Sangeet -> Wedding -> Venue & Closing) */}
         <CeremonyWipeGallery />
-
-        {/* Section 7: Venue & Closing (विवाह स्थल एवं सधन्यवाद) */}
-        <ClosingSection />
       </div>
 
       {/* Floating Music Toggle Button in bottom-right corner of mobile view */}

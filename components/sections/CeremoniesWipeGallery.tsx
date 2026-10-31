@@ -16,9 +16,10 @@ import { HaldiSection } from "./HaldiSection";
 import { MehendiSection } from "./MehendiSection";
 import { SangeetSection } from "./SangeetSection";
 import { WeddingSection } from "./WeddingSection";
+import { ClosingSection } from "./ClosingSection";
 
-// Balanced mobile scroll runway: gives each ceremony ~110vh of smooth scroll runway
-const SECTION_HEIGHT = "550vh";
+// Balanced mobile scroll runway for 6 full ceremony stages (~110vh per stage)
+const SECTION_HEIGHT = "650vh";
 
 // Keep % on every value: mixing 0 with 0% breaks the tween and the clip silently drops.
 const HIDDEN_CLIP = {
@@ -40,14 +41,15 @@ const CEREMONIES = [
   { id: "mehendi", title: "मेहंदी उत्सव", Component: MehendiSection },
   { id: "sangeet", title: "संगीत संध्या", Component: SangeetSection },
   { id: "wedding", title: "शुभ विवाह", Component: WeddingSection },
+  { id: "closing", title: "विवाह स्थल एवं सधन्यवाद", Component: ClosingSection },
 ] as const;
 
-const TOTAL_CEREMONIES = CEREMONIES.length; // 5 ceremonies total
+const TOTAL_CEREMONIES = CEREMONIES.length; // 6 stages total
 const TOTAL_LABEL = String(TOTAL_CEREMONIES).padStart(2, "0");
 
-// Evenly paced mobile wipe sequence with reading pause
+// Evenly paced mobile wipe sequence with reading pause across all 6 stages
 const WIPE_SEQUENCE = CEREMONIES.slice(1).map((ceremony, index) => {
-  const segment = 1 / (TOTAL_CEREMONIES - 1); // 0.25
+  const segment = 1 / (TOTAL_CEREMONIES - 1); // 0.20
   const segmentStart = index * segment;
   const from = segmentStart + segment * 0.18;
   const to = segmentStart + segment * 0.72;
@@ -112,7 +114,7 @@ function WipeLayer({
 
 /**
  * Top-Centered Ceremony Tracker Badge
- * Uses the exact midpoint threshold mapping ((from + to) / 2) to update seamlessly at 50% transition.
+ * Uses exact midpoint threshold mapping ((from + to) / 2) to update seamlessly at each 50% transition.
  */
 function CeremonyTracker({ progress }: { progress: MotionValue<number> }) {
   const [passedIndex, setPassedIndex] = useState(0);
@@ -169,7 +171,7 @@ export function CeremoniesWipeGallery() {
           <InvitationSection />
         </div>
 
-        {/* Subsequent Wipe Layers: Haldi, Mehendi, Sangeet, Wedding */}
+        {/* Subsequent Wipe Layers: Haldi, Mehendi, Sangeet, Wedding, Closing */}
         {WIPE_SEQUENCE.map((step, idx) => (
           <WipeLayer
             key={step.id}
