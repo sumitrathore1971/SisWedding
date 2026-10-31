@@ -4,6 +4,7 @@ import { ClosingSection } from "@/components/sections/ClosingSection";
 import { Decoration } from "@/components/ui/Decoration";
 import { MusicToggleButton } from "@/components/ui/MusicToggleButton";
 import { SplashScreen } from "@/components/ui/SplashScreen";
+import { Analytics } from "@vercel/analytics/next"
 /**
  * Single-Page Hindi Wedding Invitation Flow
  * 
@@ -12,9 +13,9 @@ import { SplashScreen } from "@/components/ui/SplashScreen";
  */
 export default function WeddingInvitationPage() {
   return (
-    
     <main className="relative min-h-screen w-full flex flex-col items-center bg-neutral-900 overflow-x-clip">
       {/* Opening Split Splash Screen */}
+      <Analytics/>
       <SplashScreen />
 
       {/* 
