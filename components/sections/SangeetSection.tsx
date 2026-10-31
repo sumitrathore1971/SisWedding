@@ -52,14 +52,9 @@ export function SangeetSection() {
         {/* Main Event Title in Jim Nightshade Script */}
         <h2 className="jim-nightshade-regular text-3xl sm:text-4xl text-[#581c87] tracking-wide leading-none select-none my-1 drop-shadow-2xs">
           Sangeet Night
-        </h2>
-        <p className="font-serif text-[11px] text-[#78350f] font-semibold mb-2">
+        </h2> 
+        <p className="font-serif mt-3 text-[11px] text-[#78350f] font-semibold mb-2">
           ॥ {weddingData.events.sangeet.titleHindi} ॥
-        </p>
-
-        {/* Poetic Quote in Italics */}
-        <p className="font-serif text-[11px] sm:text-xs text-[#3b0764] italic leading-relaxed max-w-[270px] mb-2 font-medium">
-          “सुरों में झूमते परिवार, ढोल की थाप और यादगार पारिवारिक प्रस्तुतियां”
         </p>
 
         {/* Time Onwards */}
