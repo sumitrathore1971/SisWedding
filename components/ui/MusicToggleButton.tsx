@@ -25,10 +25,16 @@ export const MusicToggleButton: React.FC<MusicToggleButtonProps> = ({
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
 
   useEffect(() => {
-    const audio = new Audio(src);
+    const audio = new Audio();
+    audio.src = src;
     audio.loop = true;
-    audio.volume = 0.7;
+    audio.volume = 0.75;
+    audio.preload = "auto";
     audioRef.current = audio;
+
+    try {
+      audio.load();
+    } catch {}
 
     const handleEnded = () => setIsPlaying(false);
     const handlePause = () => setIsPlaying(false);
@@ -38,45 +44,46 @@ export const MusicToggleButton: React.FC<MusicToggleButtonProps> = ({
     audio.addEventListener("pause", handlePause);
     audio.addEventListener("play", handlePlay);
 
-    // Attempt playback when page opens
-    const startPlayback = () => {
+    // Reliable playback trigger
+    const tryPlay = () => {
       if (userPausedRef.current) return;
-      audio
-        .play()
-        .then(() => {
-          setIsPlaying(true);
-          cleanupGestureListeners();
-        })
-        .catch(() => {
-          // Autoplay policy prevented immediate playback; fallback listeners will trigger on first interaction
-        });
-    };
-
-    const handleFirstGesture = () => {
-      if (!userPausedRef.current) {
-        startPlayback();
+      const playPromise = audio.play();
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => {
+            setIsPlaying(true);
+            removeUnlockListeners();
+          })
+          .catch(() => {
+            // Autoplay policy prevented playback. Keep listeners active until user interacts!
+          });
       }
-      cleanupGestureListeners();
     };
 
-    const cleanupGestureListeners = () => {
-      window.removeEventListener("click", handleFirstGesture);
-      window.removeEventListener("touchstart", handleFirstGesture);
-      window.removeEventListener("scroll", handleFirstGesture);
-      window.removeEventListener("keydown", handleFirstGesture);
+    const handleGesture = () => {
+      tryPlay();
     };
 
-    // 1. Try immediate autoplay on open
-    startPlayback();
+    const removeUnlockListeners = () => {
+      document.removeEventListener("pointerdown", handleGesture);
+      document.removeEventListener("touchstart", handleGesture);
+      document.removeEventListener("click", handleGesture);
+      document.removeEventListener("keydown", handleGesture);
+      window.removeEventListener("start-wedding-music", tryPlay);
+    };
 
-    // 2. Fallback: on first touch/click/scroll anywhere if browser blocked immediate autoplay
-    window.addEventListener("click", handleFirstGesture, { once: true, passive: true });
-    window.addEventListener("touchstart", handleFirstGesture, { once: true, passive: true });
-    window.addEventListener("scroll", handleFirstGesture, { once: true, passive: true });
-    window.addEventListener("keydown", handleFirstGesture, { once: true, passive: true });
+    // 1. Try immediate playback on mount
+    tryPlay();
+
+    // 2. Global gesture listeners to unlock audio on the very first touch/click anywhere on the screen
+    document.addEventListener("pointerdown", handleGesture, { passive: true });
+    document.addEventListener("touchstart", handleGesture, { passive: true });
+    document.addEventListener("click", handleGesture, { passive: true });
+    document.addEventListener("keydown", handleGesture, { passive: true });
+    window.addEventListener("start-wedding-music", tryPlay);
 
     return () => {
-      cleanupGestureListeners();
+      removeUnlockListeners();
       audio.pause();
       audio.removeEventListener("ended", handleEnded);
       audio.removeEventListener("pause", handlePause);
@@ -106,11 +113,15 @@ export const MusicToggleButton: React.FC<MusicToggleButtonProps> = ({
     if (isPlaying) {
       userPausedRef.current = true;
       audio.pause();
+      setIsPlaying(false);
     } else {
       userPausedRef.current = false;
-      audio.play().catch((err) => {
-        console.warn("Audio play blocked or file not available:", err);
-      });
+      audio
+        .play()
+        .then(() => setIsPlaying(true))
+        .catch((err) => {
+          console.warn("Audio play blocked or file not available:", err);
+        });
     }
   };
 
@@ -154,4 +165,3 @@ export const MusicToggleButton: React.FC<MusicToggleButtonProps> = ({
     </motion.button>
   );
 };
-
