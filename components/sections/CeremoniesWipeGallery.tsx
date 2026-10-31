@@ -183,7 +183,7 @@ export function CeremoniesWipeGallery() {
         ))}
 
         {/* Top-Centered Real-Time Ceremony Tracker Badge */}
-        <CeremonyTracker progress={scrollYProgress} />
+        {/* <CeremonyTracker progress={scrollYProgress} /> */}
 
         {/* Initial Scroll Prompt Cue */}
         <motion.div
