@@ -1,11 +1,9 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import {
-  cubicBezier,
   motion,
   useScroll,
-  useMotionValueEvent,
   useReducedMotion,
   useTransform,
   type MotionValue,
@@ -45,7 +43,6 @@ const CEREMONIES = [
 ] as const;
 
 const TOTAL_CEREMONIES = CEREMONIES.length; // 6 stages total
-const TOTAL_LABEL = String(TOTAL_CEREMONIES).padStart(2, "0");
 
 // Evenly paced mobile wipe sequence with reading pause across all 6 stages
 const WIPE_SEQUENCE = CEREMONIES.slice(1).map((ceremony, index) => {
@@ -112,39 +109,7 @@ function WipeLayer({
   );
 }
 
-/**
- * Top-Centered Ceremony Tracker Badge
- * Uses exact midpoint threshold mapping ((from + to) / 2) to update seamlessly at each 50% transition.
- */
-function CeremonyTracker({ progress }: { progress: MotionValue<number> }) {
-  const [passedIndex, setPassedIndex] = useState(0);
-
-  useMotionValueEvent(progress, "change", (value) => {
-    const passed = WIPE_SEQUENCE.filter(
-      (step) => value >= (step.from + step.to) / 2
-    ).length;
-    setPassedIndex(passed);
-  });
-
-  return (
-    <div
-      aria-hidden="true"
-      className="pointer-events-none absolute top-3.5 left-1/2 -translate-x-1/2 z-30 flex items-center justify-center select-none"
-    >
-      <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#500724]/90 backdrop-blur-md border border-amber-300/60 text-amber-100 shadow-md">
-        <span className="font-serif text-xs font-bold text-amber-300 tracking-wide">
-          {CEREMONIES[passedIndex].title}
-        </span>
-        <span className="text-amber-400/40 text-[10px]">•</span>
-        <span className="font-mono text-[11px] font-bold text-amber-100 tracking-wider">
-          {String(passedIndex + 1).padStart(2, "0")} / {TOTAL_LABEL}
-        </span>
-      </div>
-    </div>
-  );
-}
-
-export function CeremoniesWipeGallery() {
+ export function CeremoniesWipeGallery() {
   const wrapperRef = useRef<HTMLElement>(null);
   const shouldReduceMotion = useReducedMotion() ?? false;
 
@@ -181,9 +146,6 @@ export function CeremoniesWipeGallery() {
             zIndex={idx + 10}
           />
         ))}
-
-        {/* Top-Centered Real-Time Ceremony Tracker Badge */}
-        {/* <CeremonyTracker progress={scrollYProgress} /> */}
 
         {/* Initial Scroll Prompt Cue */}
         <motion.div

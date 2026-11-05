@@ -56,32 +56,11 @@ main, section {
 }
 
 /* Inverted filled white corners matching design showcase */
-.corner-tl {
-  background: radial-gradient(circle at 100% 100%, transparent 22px, #ffffff 22.5px);
-}
-.corner-tr {
-  background: radial-gradient(circle at 0% 100%, transparent 22px, #ffffff 22.5px);
-}
-.corner-bl {
-  background: radial-gradient(circle at 100% 0%, transparent 22px, #ffffff 22.5px);
-}
+.corner-tl,
+.corner-tr,
+.corner-bl,
 .corner-br {
-  background: radial-gradient(circle at 0% 0%, transparent 22px, #ffffff 22.5px);
-}
-
-@media (min-width: 640px) {
-  .corner-tl {
-    background: radial-gradient(circle at 100% 100%, transparent 28px, #ffffff 28.5px);
-  }
-  .corner-tr {
-    background: radial-gradient(circle at 0% 100%, transparent 28px, #ffffff 28.5px);
-  }
-  .corner-bl {
-    background: radial-gradient(circle at 100% 0%, transparent 28px, #ffffff 28.5px);
-  }
-  .corner-br {
-    background: radial-gradient(circle at 0% 0%, transparent 28px, #ffffff 28.5px);
-  }
+  background: transparent;
 }
 
 /* Clean minimal scrollbar for framed mobile presentation */

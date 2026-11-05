@@ -53,12 +53,12 @@ export function WeddingSection() {
         </p>
 
         {/* Main Event Title in Jim Nightshade Script */}
-        <h2 className="jim-nightshade-regular mb-5 mt-3 text-4xl sm:text-4.5xl text-[#701a28] tracking-wide leading-none select-none my-1 drop-shadow-2xs">
+        <h2 className="jim-nightshade-regular  mt-3 text-4xl sm:text-4.5xl text-[#701a28] tracking-wide leading-none select-none my-1 drop-shadow-2xs">
           Wedding & Reception
         </h2>
 
         {/* Tilak Ceremony & Time - Pure Typography (Not in a card) */}
-        <div className="flex flex-col items-center mb-2 mt-10">
+        <div className="flex flex-col items-center mb-2 mt-5">
           <p className="font-serif text-xs sm:text-[15px] font-bold text-[#701a28] tracking-wider mb-0.5">
             ॥ तिलक समारोह ॥
           </p>
@@ -72,7 +72,7 @@ export function WeddingSection() {
             ॥ बारात आगमन एवं स्वागत ॥
           </p>
           <p className="font-serif text-sm sm:text-[15px] font-bold text-[#701a28] tracking-wider mb-0.5">
-           ॥ आशीर्वाद एवं स्वल्पाहार ॥
+           ॥ आशीर्वाद एवं स्वरुचिभोज ॥
           </p>
           <p className="font-sans text-xs sm:text-sm font-bold tracking-wider text-[#9a3412] uppercase drop-shadow-2xs">
             सायं ०७:०० बजे से
@@ -80,7 +80,7 @@ export function WeddingSection() {
         </div>
 
         {/* Venue at bottom */}
-        <p className="font-serif text-xs sm:text-[13px] text-[#571c0c] font-semibold mt-3">
+        <p className="font-serif text-xs sm:text-[13px] text-[#571c0c] font-semibold mt-1">
           {weddingData.venue.venueName}, {weddingData.venue.address}
         </p>
       </div>

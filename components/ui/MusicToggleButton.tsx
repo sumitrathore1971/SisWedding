@@ -110,8 +110,14 @@ export const MusicToggleButton: React.FC<MusicToggleButtonProps> = ({
       return () => {
         clearInterval(waveformIntervalId);
       };
+    } else {
+      const frameId = requestAnimationFrame(() => {
+        setHeights(Array(bars).fill(0.25));
+      });
+      return () => {
+        cancelAnimationFrame(frameId);
+      };
     }
-    setHeights(Array(bars).fill(0.25));
   }, [isPlaying]);
 
   const handleClick = (e: React.MouseEvent) => {

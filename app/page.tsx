@@ -38,14 +38,18 @@ export default function WeddingInvitationPage() {
 
       {/* 
         Fixed Architectural White Frame Overlay with Filled White Corners
-        - Takes full height (top-0 bottom-0)
+        - Uses dynamic viewport height (h-[100svh] / h-[100dvh]) so Android Chrome's URL bar never pushes the bottom border off-screen
         - Flush outer straight edges
         - Solid white borders on all 4 sides
         - Corner wedges are 100% filled with solid white curving smoothly into the inner viewport
+        - Crisp vector SVGs inside corners eliminate Android GPU gradient aliasing / seam artifacts
         - Non-interactive (pointer-events-none) so all touch/click interactions pass freely
       */}
       <div
-        className="pointer-events-none fixed inset-0 sm:left-1/2 sm:-translate-x-1/2 sm:w-[480px] z-50 overflow-hidden"
+        className="pointer-events-none fixed top-0 left-0 right-0 h-[100svh] h-[100dvh] max-h-[100dvh] sm:left-1/2 sm:-translate-x-1/2 sm:w-[480px] z-50 overflow-hidden"
+        style={{
+          paddingBottom: "env(safe-area-inset-bottom, 0px)",
+        }}
         aria-hidden="true"
       >
         {/* Top white border */}
@@ -61,16 +65,32 @@ export default function WeddingInvitationPage() {
         <div className="absolute top-0 bottom-0 right-0 w-[6px] sm:w-[8px] bg-white" />
 
         {/* Top-Left Filled White Corner */}
-        <div className="absolute top-0 left-0 w-7 h-7 sm:w-9 sm:h-9 corner-tl" />
+        <div className="absolute top-0 left-0 w-7 h-7 sm:w-9 sm:h-9 corner-tl">
+          <svg viewBox="0 0 28 28" fill="#ffffff" className="w-full h-full block" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 0 L28 0 L28 6 A22 22 0 0 0 6 28 L0 28 Z" />
+          </svg>
+        </div>
 
         {/* Top-Right Filled White Corner */}
-        <div className="absolute top-0 right-0 w-7 h-7 sm:w-9 sm:h-9 corner-tr" />
+        <div className="absolute top-0 right-0 w-7 h-7 sm:w-9 sm:h-9 corner-tr">
+          <svg viewBox="0 0 28 28" fill="#ffffff" className="w-full h-full block" xmlns="http://www.w3.org/2000/svg">
+            <path d="M28 0 L0 0 L0 6 A22 22 0 0 1 22 28 L28 28 Z" />
+          </svg>
+        </div>
 
         {/* Bottom-Left Filled White Corner */}
-        <div className="absolute bottom-0 left-0 w-7 h-7 sm:w-9 sm:h-9 corner-bl" />
+        <div className="absolute bottom-0 left-0 w-7 h-7 sm:w-9 sm:h-9 corner-bl">
+          <svg viewBox="0 0 28 28" fill="#ffffff" className="w-full h-full block" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 28 L0 0 L6 0 A22 22 0 0 0 28 22 L28 28 Z" />
+          </svg>
+        </div>
 
         {/* Bottom-Right Filled White Corner */}
-        <div className="absolute bottom-0 right-0 w-7 h-7 sm:w-9 sm:h-9 corner-br" />
+        <div className="absolute bottom-0 right-0 w-7 h-7 sm:w-9 sm:h-9 corner-br">
+          <svg viewBox="0 0 28 28" fill="#ffffff" className="w-full h-full block" xmlns="http://www.w3.org/2000/svg">
+            <path d="M28 28 L28 0 L22 0 A22 22 0 0 1 0 22 L0 28 Z" />
+          </svg>
+        </div>
       </div>
     </main>
   );
