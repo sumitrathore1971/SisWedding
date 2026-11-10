@@ -1,9 +1,14 @@
 import { OpeningSection } from "@/components/sections/OpeningSection";
-import { CeremonyWipeGallery } from "@/components/sections/CeremoniesWipeGallery";
+import { InvitationSection } from "@/components/sections/InvitationSection";
+import { HaldiSection } from "@/components/sections/HaldiSection";
+import { MehendiSection } from "@/components/sections/MehendiSection";
+import { SangeetSection } from "@/components/sections/SangeetSection";
+import { WeddingSection } from "@/components/sections/WeddingSection";
+import { ClosingSection } from "@/components/sections/ClosingSection";
 import { Decoration } from "@/components/ui/Decoration";
 import { MusicToggleButton } from "@/components/ui/MusicToggleButton";
 import { SplashScreen } from "@/components/ui/SplashScreen";
-import { Analytics } from "@vercel/analytics/next"
+import { Analytics } from "@vercel/analytics/next";
 /**
  * Single-Page Hindi Wedding Invitation Flow
  * 
@@ -23,12 +28,29 @@ export default function WeddingInvitationPage() {
       */}
       
       <div className="w-full max-w-[480px] min-h-screen bg-white flex flex-col relative overflow-x-clip shadow-2xl">
-        {/* Section 1: Opening / Landing Screen */}
+        {/* Falling Petals Background Effect */}
         <Decoration />
+
+        {/* Section 1: Opening / Landing Screen */}
         <OpeningSection />
 
-        {/* Sections 2-7: Sticky Wipe Gallery (Invitation -> Haldi -> Mehendi -> Sangeet -> Wedding -> Venue & Closing) */}
-        <CeremonyWipeGallery />
+        {/* Section 2: Family Wedding Invitation & Shloka */}
+        <InvitationSection />
+
+        {/* Section 3: Haldi Ceremony */}
+        <HaldiSection />
+
+        {/* Section 4: Mehendi Night */}
+        <MehendiSection />
+
+        {/* Section 5: Sangeet Night */}
+        <SangeetSection />
+
+        {/* Section 6: Wedding & Reception */}
+        <WeddingSection />
+
+        {/* Section 7: Venue & Closing */}
+        <ClosingSection />
       </div>
 
       {/* Floating Music Toggle Button in bottom-right corner of mobile view */}
