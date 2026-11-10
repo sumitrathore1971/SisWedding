@@ -8,7 +8,7 @@ export function ClosingSection() {
   const bg =
     weddingData.closing.backgroundImage ||
     weddingData.venue.backgroundImage ||
-    "/images/footer.jpg";
+    "/images/gfhrz16okjy6if3nyjlr.avif";
 
   return (
     <section

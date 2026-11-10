@@ -5,7 +5,7 @@ import Image from "next/image";
 import { weddingData } from "@/data/wedding";
 
 export function OpeningSection() {
-  const bg = weddingData.opening.backgroundImage || "/images/homebg.png";
+  const bg = weddingData.opening.backgroundImage || "/images/rezeidypif9fdhgm829f.avif";
   const celebrationTitle =
     weddingData.opening.celebrationTitleEnglish || "WEDDING CELEBRATION OF";
   const brideName =

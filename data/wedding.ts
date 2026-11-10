@@ -131,7 +131,7 @@ export const weddingData: WeddingData = {
     targetScrollId: "invitation-section",
     backgroundPlaceholderLabel: "पृष्ठभूमि सजावट छायाचित्र (Cover Background)",
     illustrationPlaceholderLabel: "पारंपरिक मंगल कलश / पुष्प कलाकृति (Opening Artwork)",
-    backgroundImage: "/images/homebg.png",
+    backgroundImage: "/images/rezeidypif9fdhgm829f.avif",
   },
   couple: {
     sectionHeading: "वर एवं वधू",
@@ -168,7 +168,7 @@ export const weddingData: WeddingData = {
       "समस्त राठौर एवं साहू परिवार",
     ],
     illustrationPlaceholderLabel: "श्री गणेश जी / मंगल कलश कलाकृति (Family Invitation Artwork)",
-    backgroundImage: "/images/from all.jpg",
+    backgroundImage: "/images/maaok81mfynln5etp0xg.avif",
   },
   baratNotice: "बारात दिनांक २५ नवंबर २०२६ को श्रीमान मनोज साहू, टीकमगढ़ वालों के यहाँ से आएगी।",
   schedule: [
@@ -238,7 +238,7 @@ export const weddingData: WeddingData = {
       bannerPlaceholderLabel: "हल्दी समारोह मुख्य छायाचित्र (Haldi Event Banner)",
       illustrationPlaceholderLabel: "हल्दी कलश व पुष्प सज्जा कलाकृति (Haldi Illustration)",
       accentColorClass: "border-amber-400/40 text-amber-700 bg-amber-500/10",
-      backgroundImage: "/images/haldi.jpg",
+      backgroundImage: "/images/dtcdnt9rzr8rieltzrkh.avif",
     },
     mehendi: {
       id: "mehendi-section",
@@ -255,7 +255,7 @@ export const weddingData: WeddingData = {
       bannerPlaceholderLabel: "मेहंदी समारोह मुख्य छायाचित्र (Mehendi Event Banner)",
       illustrationPlaceholderLabel: "हिना हस्तकला व तोरण कलाकृति (Mehendi Illustration)",
       accentColorClass: "border-emerald-500/40 text-emerald-800 bg-emerald-500/10",
-      backgroundImage: "/images/mhendi.jpg",
+      backgroundImage: "/images/maeuixonp7wm7hqkpv0m.avif",
     },
     sangeet: {
       id: "sangeet-section",
@@ -272,7 +272,7 @@ export const weddingData: WeddingData = {
       bannerPlaceholderLabel: "संगीत संध्या मुख्य छायाचित्र (Sangeet Event Banner)",
       illustrationPlaceholderLabel: "सितार, तबला व ढोलक कलाकृति (Sangeet Illustration)",
       accentColorClass: "border-purple-500/40 text-purple-800 bg-purple-500/10",
-      backgroundImage: "/images/sangeet.png",
+      backgroundImage: "/images/kjbuhixokvxpobxy7vcz.avif",
     },
     wedding: {
       id: "wedding-section",
@@ -289,7 +289,7 @@ export const weddingData: WeddingData = {
       bannerPlaceholderLabel: "विवाह मंडप मुख्य छायाचित्र (Wedding Mandap Banner)",
       illustrationPlaceholderLabel: "मंडप, हवनकुंड व मंगलसूत्र कलाकृति (Wedding Illustration)",
       accentColorClass: "border-rose-500/40 text-rose-800 bg-rose-500/10",
-      backgroundImage: "/images/reception.jpg",
+      backgroundImage: "/images/j6rekhpgiqds90vv7jvc.avif",
     },
     reception: {
       id: "reception-section",
@@ -306,7 +306,7 @@ export const weddingData: WeddingData = {
       bannerPlaceholderLabel: "रिसेप्शन स्टेज मुख्य छायाचित्र (Reception Event Banner)",
       illustrationPlaceholderLabel: "शाही स्वागत तोरण व पुष्प सज्जा (Reception Illustration)",
       accentColorClass: "border-amber-600/40 text-amber-900 bg-amber-600/10",
-      backgroundImage: "/images/reception.jpg",
+      backgroundImage: "/images/j6rekhpgiqds90vv7jvc.avif",
     },
   },
   venue: {
@@ -319,7 +319,7 @@ export const weddingData: WeddingData = {
     mapButtonText: "Location",
     parkingNotice: "अतिथियों के लिए परिसर के अंदर पर्याप्त सुरक्षित पार्किंग की सुविधा उपलब्ध है।",
     photoPlaceholderLabel: "विवाह स्थल मुख्य प्रवेश द्वार / रिसॉर्ट छायाचित्र (Venue Photo)",
-    backgroundImage: "/images/footer.jpg",
+    backgroundImage: "/images/gfhrz16okjy6if3nyjlr.avif",
   },
   closing: {
     sectionHeading: "आपकी उपस्थिति प्रार्थनीय है",
@@ -342,6 +342,6 @@ export const weddingData: WeddingData = {
     ],
     illustrationPlaceholderLabel: "हाथ जोड़े नमस्कार / मंगलमय कलश प्रतीक (Closing Artwork)",
     scrollToTopButtonText: "Back to Top",
-    backgroundImage: "/images/footer.jpg",
+    backgroundImage: "/images/gfhrz16okjy6if3nyjlr.avif",
   },
 };
