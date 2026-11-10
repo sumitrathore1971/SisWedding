@@ -146,7 +146,7 @@ export const weddingData: WeddingData = {
       imageAspectRatio: "3/4",
     },
     groom: {
-      name: "चि. इंजि. अवतारित",
+      name: "चि. इंजि. अवतरित",
       relationTitle: "सुपुत्र",
       parents: "श्री मनोज कुमार साहू",
       grandparents: "श्री वृंदावनलाल साहू",
